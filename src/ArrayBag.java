@@ -4,7 +4,7 @@ public class ArrayBag <T> implements BagInterface <T> {
     public static final int MAX_SIZE = 10000;
     private T[] store;
     private int qtyOfItems = 0;
-    private int currentSize;
+    private int current_size;
 
     public ArrayBag()
     {
@@ -13,8 +13,8 @@ public class ArrayBag <T> implements BagInterface <T> {
 
     public ArrayBag(int currentSize)
     {
-        this.currentSize = currentSize;
-        store = (T[]) new Object[this.currentSize];
+        this.current_size = currentSize;
+        store = (T[]) new Object[this.current_size];
     }
 
     /** Gets the current number of entries in this bag.
@@ -44,7 +44,7 @@ public class ArrayBag <T> implements BagInterface <T> {
             return false;
         }
 
-        if(qtyOfItems == currentSize)
+        if(qtyOfItems == current_size)
         {
             resizeStorage();
         }
@@ -56,7 +56,18 @@ public class ArrayBag <T> implements BagInterface <T> {
 
     private void resizeStorage()
     {
+        // Java likes to double a data structure every time it is resized since it is an expensive process
+        current_size *= 2;
 
+        // Check that current_size is not > than MAX_SIZE by using Math.min() which outputs the smaller int
+        current_size = Math.min(current_size, MAX_SIZE);
+
+        T[] newStore = (T[]) new Object[current_size];
+        for (int i = 0; i < qtyOfItems; i++)
+        {
+            newStore[i] = store[i];
+        }
+        store = newStore;
     }
 
     /** Removes one unspecified entry from this bag, if possible.
@@ -118,6 +129,20 @@ public class ArrayBag <T> implements BagInterface <T> {
      */
     public int getFrequencyOf(T anEntry)
     {
+        /* This is the in class code */
+        int counter = 0;
+        for (int i = 0; i < qtyOfItems; i++)
+        {
+            if(anEntry.equals(store[i]))
+            {
+                counter++;
+            }
+        }
+        return counter;
+
+        /*
+         * This was my code
+         *
         int frequency = 0; // Is this the best place to put it? Would it be better to initialize this as a global variable?
         for (int i = 0; i < qtyOfItems; i++)
         {
@@ -127,6 +152,8 @@ public class ArrayBag <T> implements BagInterface <T> {
             }
         }
         return frequency;
+
+         */
     }
 
     /** Tests whether this bag contains a given entry.
@@ -135,6 +162,19 @@ public class ArrayBag <T> implements BagInterface <T> {
      */
     public boolean contains(T anEntry)
     {
+        /* This is the in class code */
+
+        for (int i = 0; i < qtyOfItems; i++) {
+            if(anEntry.equals(store[i]))
+            {
+                return true;
+            }
+        }
+        return false;
+
+        /*
+         * This was my code
+
         for (int i = 0; i < qtyOfItems; i++)
         {
             if (store[i] == anEntry)
@@ -143,6 +183,8 @@ public class ArrayBag <T> implements BagInterface <T> {
             }
         }
         return false;
+
+         */
     }
 
     /** Retrieves all entries that are in this bag.
@@ -151,12 +193,40 @@ public class ArrayBag <T> implements BagInterface <T> {
      */
     public T[] toArray()
     {
+        /* This is teh in class code */
+        // This avoids return a reference to store[] as well as avoids returning any null elements
 
+        T[] returnStore = (T[]) new Object[qtyOfItems];
+
+        for (int i = 0; i < qtyOfItems; i++)
+        {
+            returnStore [i] = store[i];
+        }
+
+        return returnStore;
+        /*
+         * This was my code
+         *
         T [] intBagArray = (T[]) new Object[this.currentSize];
         for (int i = 0; i < qtyOfItems; i++)
         {
             intBagArray[i] = store[i];
         }
         return intBagArray;
+         */
+    }
+
+    @Override
+    public String toString()
+    {
+        String output = "[";
+        String comma = "";
+        for (int i = 0; i < qtyOfItems; i++)
+        {
+            output += comma + store[i];
+            comma = " , ";
+        }
+
+        return output + "]";
     }
 }

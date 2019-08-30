@@ -1,8 +1,32 @@
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
         BagInterface<Integer> bag = new ArrayBag<>();
 
+        /*
+         * This is the code created in class
+         */
+        System.out.println(bag.getCurrentSize());
+
+        bag.add(1);
+        bag.add(2);
+        bag.add(3);
+        bag.add(4);
+        bag.add(5);
+        System.out.println(bag.getCurrentSize());
+        System.out.println(bag);
+
+        bag.remove(5);
+        System.out.println("The current size of the bag is: " + bag.getCurrentSize());
+
+        Object[] tmp = bag.toArray();
+        System.out.println(Arrays.toString(tmp));
+
+        /*
+         * This was my code
+         *
         // Check that bag is empty
         System.out.println("The current size of the bag is: " + bag.getCurrentSize());
         System.out.println("The bag is empty: " + bag.isEmpty());
@@ -46,5 +70,9 @@ public class Main {
         // Check clear()
         bag.clear();
         System.out.println("The current size of the bag is: " + bag.getCurrentSize());
+        */
+
+
+
     }
 }
